@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>我们的回忆 ❤</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+    #slideshow {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255,105,180,0.6);
+      opacity: 1;
+      transition: opacity 1.5s ease-in-out; /* 淡入淡出 */
+    }
+    /* 返回按钮 */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      background: rgba(255,105,180,0.8);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      z-index: 5;
+      text-decoration: none;
+    }
+    .back-btn:hover {
+      background: rgba(255,50,120,1);
+    }
+    /* 音乐按钮 */
+    #musicBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255,105,180,0.8);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+    #musicBtn:hover {
+      background: rgba(255,50,120,1);
+    }
+  </style>
+</head>
+<body>
+  <!-- 返回主页 -->
+  <a href="index.html" class="back-btn">⬅ 返回</a>
+
+  <!-- 幻灯片 -->
+  <img id="slideshow" src="images/1.jpg" alt="幻灯片">
+
+  <!-- 背景音乐 -->
+  <audio id="bgm" autoplay loop>
+    <source src="music/meet.mp3" type="audio/mp3">
+    你的浏览器不支持 audio 标签。
+  </audio>
+  <button id="musicBtn">🔊</button>
+
+  <script>
+    // ===== 图片数组（50张） =====
+    const imgs = [];
+    for (let i = 1; i <= 50; i++) {
+      imgs.push(`images/${i}.jpg`);
+    }
+
+    let idx = 0;
+    const imgTag = document.getElementById("slideshow");
+
+    function changeImage() {
+      // 淡出
+      imgTag.style.opacity = 0;
+      setTimeout(()=>{
+        idx = (idx+1)%imgs.length;
+        imgTag.src = imgs[idx];
+        // 淡入
+        imgTag.style.opacity = 1;
+      }, 1500); // 等待淡出动画结束后再换图
+    }
+
+    setInterval(changeImage, 3500);
+
+    // ===== 音乐控制 =====
+    const bgm = document.getElementById("bgm");
+    const musicBtn = document.getElementById("musicBtn");
+    musicBtn.addEventListener("click", ()=>{
+      if (bgm.paused) {
+        bgm.play();
+        musicBtn.textContent = "🔊";
+      } else {
+        bgm.pause();
+        musicBtn.textContent = "🔇";
+      }
+    });
+  </script>
+</body>
+</html>

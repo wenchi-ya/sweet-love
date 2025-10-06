@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>浪漫主页 ❤</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      text-align: center;
+      font-family: 'Microsoft YaHei', sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+    h1 {
+      margin-top: 80px;
+      font-size: 3rem;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      position: relative;
+      z-index: 2;
+    }
+    .menu {
+      margin-top: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      z-index: 2;
+      position: relative;
+    }
+    .menu a {
+      text-decoration: none;
+      font-size: 1.5rem;
+      padding: 15px 40px;
+      background: linear-gradient(45deg, #ff6f91, #ff9671);
+      border-radius: 30px;
+      color: white;
+      box-shadow: 0 6px 20px rgba(255, 102, 178, 0.4);
+      transition: all 0.3s;
+    }
+    .menu a:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #ff4e75, #ff7597);
+    }
+    /* 飘落的玫瑰花瓣 */
+    .petal {
+      position: fixed;
+      top: -10%;
+      font-size: 24px;
+      color: #ff3366;
+      animation: fall linear infinite;
+      z-index: 1;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+    /* 两边的玫瑰花束 */
+    .roses {
+      position: fixed;
+      bottom: 0;
+      font-size: 80px;
+      animation: sway 4s ease-in-out infinite;
+      z-index: 1;
+    }
+    .roses.left {
+      left: 20px;
+    }
+    .roses.right {
+      right: 20px;
+    }
+    @keyframes sway {
+      0% { transform: rotate(-5deg); }
+      50% { transform: rotate(5deg); }
+      100% { transform: rotate(-5deg); }
+    }
+    /* 音乐按钮 */
+    #musicBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(255,105,180,0.8);
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      transition: background 0.3s;
+    }
+    #musicBtn:hover {
+      background: rgba(255,50,120,1);
+    }
+  </style>
+</head>
+<body>
+  <h1>给最爱的你 <span class="heart">❤</span></h1>
+  <div class="menu">
+    <a href="sub1.html">💌 恋爱小游戏</a>
+    <a href="sub2.html">📸 小郭的最美瞬间</a>
+    <a href="sub3.html">🎬 看点爱情故事</a>
+    <a href="sub4.html">💝 爱心留言墙</a>
+  </div>
+
+  <!-- 背景音乐 -->
+  <audio id="bgm" autoplay loop>
+    <source src="music/love.mp3" type="audio/mp3">
+    你的浏览器不支持 audio 标签。
+  </audio>
+  <button id="musicBtn">🔊</button>
+
+  <!-- 左右两边玫瑰花束 -->
+  <div class="roses left">
+    <img src="roses/1.jpg" alt="玫瑰花束">
+  </div>
+  <div class="roses right">
+    <img src="roses/2.jpg" alt="玫瑰花束">
+  </div>
+
+  <script>
+    // 随机飘落玫瑰花瓣
+    function createPetal() {
+      const petal = document.createElement("div");
+      petal.classList.add("petal");
+      petal.innerHTML = "🌹";
+      petal.style.left = Math.random() * 100 + "vw";
+      petal.style.animationDuration = (5 + Math.random() * 5) + "s";
+      document.body.appendChild(petal);
+      setTimeout(()=>petal.remove(),10000);
+    }
+    setInterval(createPetal, 500);
+
+    // ========== 音乐控制 ==========
+    const bgm = document.getElementById("bgm");
+    const musicBtn = document.getElementById("musicBtn");
+    musicBtn.addEventListener("click", ()=>{
+      if (bgm.paused) {
+        bgm.play();
+        musicBtn.textContent = "🔊";
+      } else {
+        bgm.pause();
+        musicBtn.textContent = "🔇";
+      }
+    });
+
+  </script>
+</body>
+</html>

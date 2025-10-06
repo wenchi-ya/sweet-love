@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爱心留言墙 - 给最爱的你</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      /* 返回按钮样式 */
+      .back-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        background: rgba(255,105,180,0.8);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        z-index: 1000;
+        text-decoration: none;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        transition: background 0.3s;
+      }
+      .back-btn:hover {
+        background: rgba(255,50,120,1);
+      }
+    </style>
+</head>
+<body>
+    <!-- 返回主页按钮 -->
+    <a href="index.html" class="back-btn">⬅ 返回</a>
+
+    <div class="floating-hearts" id="floatingHearts"></div>
+    <div class="sparkles" id="sparkles"></div>
+    
+    <div class="container">
+        <header>
+            <h1>爱心留言墙 <span class="heart">❤</span></h1>
+            <p class="subtitle">记录我们的美好瞬间，让爱永远传递</p>
+        </header>
+        
+        <section class="login-section" id="loginSection">
+            <div class="login-container">
+                <div class="welcome-text">
+                    <h2>欢迎回来</h2>
+                    <p>在这里记录我们的每一个美好时刻</p>
+                </div>
+                
+                <div class="form-container">
+                    <form id="loginForm" class="auth-form active">
+                        <h3>登录账户</h3>
+                        <div class="form-group">
+                            <label for="loginUsername">用户名</label>
+                            <input type="text" id="loginUsername" required placeholder="请输入用户名">
+                        </div>
+                        <div class="form-group">
+                            <label for="loginPassword">密码</label>
+                            <input type="password" id="loginPassword" required placeholder="请输入密码">
+                        </div>
+                        <button type="submit" class="submit-btn">登录</button>
+                        <div class="toggle-form">
+                            <p>还没有账号？<a href="#" id="showRegister">立即注册</a></p>
+                        </div>
+                    </form>
+                    
+                    <form id="registerForm" class="auth-form">
+                        <h3>创建账户</h3>
+                        <div class="form-group">
+                            <label for="registerUsername">用户名</label>
+                            <input type="text" id="registerUsername" required placeholder="请输入用户名">
+                        </div>
+                        <div class="form-group">
+                            <label for="registerPassword">密码</label>
+                            <input type="password" id="registerPassword" required placeholder="请输入密码">
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">确认密码</label>
+                            <input type="password" id="confirmPassword" required placeholder="请再次输入密码">
+                        </div>
+                        <button type="submit" class="submit-btn">注册</button>
+                        <div class="toggle-form">
+                            <p>已有账号？<a href="#" id="showLogin">立即登录</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+        
+        <section class="main-section hidden" id="mainSection">
+            <div class="user-info" id="userInfo">
+                <div class="avatar" id="userAvatar">U</div>
+                <div class="user-details">
+                    <div class="username" id="usernameDisplay">用户名</div>
+                    <button class="logout-btn" id="logoutBtn">退出登录</button>
+                </div>
+            </div>
+            
+            <div class="tab-buttons">
+                <button class="tab-btn active" id="messageTab">💌 留言</button>
+                <button class="tab-btn" id="memoryTab">📸 留念</button>
+            </div>
+            
+            <div class="tab-content">
+                <!-- 留言标签页 -->
+                <div class="tab-pane active" id="messagePane">
+                    <div class="pane-header">
+                        <h2>发布留言</h2>
+                        <p>写下你想说的话，让爱意传递</p>
+                    </div>
+                    <form id="messageForm">
+                        <div class="form-group">
+                            <label for="messageContent">留言内容</label>
+                            <textarea id="messageContent" rows="4" required placeholder="写下你的心里话..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">发布留言 <span class="heart">❤</span></button>
+                    </form>
+                    
+                    <div class="message-wall" id="messageWall">
+                        <h3>留言墙</h3>
+                        <!-- 留言将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+                
+                <!-- 留念标签页 -->
+                <div class="tab-pane" id="memoryPane">
+                    <div class="pane-header">
+                        <h2>上传留念</h2>
+                        <p>记录美好瞬间，珍藏我们的回忆</p>
+                    </div>
+                    <form id="memoryForm" class="upload-form">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">📸</div>
+                                <p>点击选择照片或拖拽到此处</p>
+                                <span>支持 JPG、PNG 格式，最大 5MB</span>
+                            </div>
+                            <input type="file" id="memoryPhoto" accept="image/*" hidden>
+                        </div>
+                        <div class="form-group">
+                            <label for="memoryDescription">照片描述</label>
+                            <textarea id="memoryDescription" rows="3" placeholder="为这张照片写一段描述..."></textarea>
+                        </div>
+                        <div class="preview-container" id="previewContainer" style="display: none;">
+                            <img id="imagePreview" src="" alt="预览图片">
+                            <button type="button" id="removePreview" class="remove-btn">移除</button>
+                        </div>
+                        <button type="submit" class="submit-btn">上传留念 <span class="heart">❤</span></button>
+                    </form>
+                    
+                    <div class="memory-wall" id="memoryWall">
+                        <h3>留念墙</h3>
+                        <!-- 留念将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="nav-buttons">
+                <button class="nav-btn" id="refreshBtn">🔄 刷新</button>
+                <button class="nav-btn" id="aboutBtn">💝 关于我们</button>
+            </div>
+        </section>
+        
+        <footer>
+            <p>用心记录每一份爱意 ❤ 永远珍藏我们的回忆</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
